@@ -2,10 +2,26 @@
 Simple Options Pricing
 ========================
 
+S - Stock price
+K - Strike price
+T - Expiration days
+rf - risk-free interest rate
+sigma - volatility
+N - periods
+PC - put or call: 'P', 'C'
+EuroAmer - European or American Options: 'Euro', 'Amer'
 
 """
 
 import numpy as np
+
+def BSM(S, K, T, rf, sigma, PC):
+    d1 = (np.log(S/K) + (rf+sigma**2/2)*T) / (sigma * np.sqrt(T))
+    d2 = d1 - sigma*np.sqrt(T)
+    if PC == 'C':
+        return S*Ndp6(d1) - K*np.exp(-rf*T)*Ndp6(d2)
+    elif PC == 'P':
+        return K*np.exp(-rf*T)*Ndp6(-d2) - S*Ndp6(-d1)
 
 def EuroBin(S, K, T, rf, sigma, N, PC):
     """
